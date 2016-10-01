@@ -9,6 +9,17 @@ facts("Example from Wikipedia") do
     @fact isapprox(rref(A), R) --> true
 end
 
+facts("Example from Wikibooks") do
+    A = [0  3  -6  6  4  -5;
+         3 -7   8 -5  8   9;
+         3 -9  12 -9  6  15]
+    R = [1  0  -2  3  0 -24;
+         0  1  -2  2  0  -7;
+         0  0   0  0  1   4]
+    @fact isapprox(rref(A), R) --> true
+end
+
+
 facts("Example from Rosetta Code") do
     A = [ 1   2   -1   -4;
           2   3   -1   -11;
