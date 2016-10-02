@@ -54,3 +54,13 @@ facts("Matrices of rationals") do
         @fact C --> R
     end
 end
+
+facts("Matrix of Complex numbers") do
+    A = [1+ im 1-im  4;
+         3+2im 2-im  2]
+    R = [1     0    -2- im;
+         0     1     1+4im]
+    C = rref(A)
+    @fact typeof(C) --> Matrix{Complex128}
+    @fact isapprox(C, R) --> true
+end
