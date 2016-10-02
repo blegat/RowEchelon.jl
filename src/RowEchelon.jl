@@ -4,14 +4,23 @@ export rref
 
 function rref{T}(A::Matrix{T})
     nr, nc = size(A)
-    U = copy!(similar(A, T <: Complex ? Complex128 : Float64), A)
-    ɛ = eps(norm(U,Inf))
+    if T <: Complex
+        S = Complex128
+    elseif T <: Union{Integer, Float16, Float32}
+        S = Float64
+    else
+        S = T
+    end
+    U = copy!(similar(A, S), A)
+    ɛ = S <: Rational ? 0 : eps(norm(U,Inf))
     i = j = 1
     while i <= nr && j <= nc
         (m, mi) = findmax(abs(U[i:nr,j]))
         mi = mi+i - 1
         if m <= ɛ
-            U[i:nr,j] = 0
+            if ɛ > 0
+                U[i:nr,j] = 0
+            end
             j += 1
         else
             for k=j:nc
