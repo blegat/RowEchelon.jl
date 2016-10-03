@@ -1,6 +1,42 @@
 module RowEchelon
 
-export rref
+export rref, rref!
+
+function rref!{T}(A::Matrix{T}, ɛ=T <: Union{Rational,Integer} ? 0 : eps(norm(A,Inf)))
+    nr, nc = size(A)
+    i = j = 1
+    while i <= nr && j <= nc
+        (m, mi) = findmax(abs(A[i:nr,j]))
+        mi = mi+i - 1
+        if m <= ɛ
+            if ɛ > 0
+                A[i:nr,j] = 0
+            end
+            j += 1
+        else
+            for k=j:nc
+                A[i, k], A[mi, k] = A[mi, k], A[i, k]
+            end
+            d = A[i,j]
+            for k = j:nc
+                A[i,k] /= d
+            end
+            for k = 1:nr
+                if k != i
+                    d = A[k,j]
+                    for l = j:nc
+                        A[k,l] -= d*A[i,l]
+                    end
+                end
+            end
+            i += 1
+            j += 1
+        end
+    end
+    A
+end
+
+rrefconv{T}(::Type{T}, A::Matrix) = rref!(copy!(similar(A, T), A))
 
 """
     rref(A)
@@ -36,47 +72,9 @@ julia> rref([ 1  2  0   3;
  0.0  0.0  0.0  1.0
 ```
 """
-function rref{T}(A::Matrix{T})
-    nr, nc = size(A)
-    if T <: Complex
-        S = Complex128
-    elseif T <: Union{Integer, Float16, Float32}
-        S = Float64
-    else
-        S = T
-    end
-    U = copy!(similar(A, S), A)
-    ɛ = S <: Rational ? 0 : eps(norm(U,Inf))
-    i = j = 1
-    while i <= nr && j <= nc
-        (m, mi) = findmax(abs(U[i:nr,j]))
-        mi = mi+i - 1
-        if m <= ɛ
-            if ɛ > 0
-                U[i:nr,j] = 0
-            end
-            j += 1
-        else
-            for k=j:nc
-                U[i, k], U[mi, k] = U[mi, k], U[i, k]
-            end
-            d = U[i,j]
-            for k = j:nc
-                U[i,k] /= d
-            end
-            for k = 1:nr
-                if k != i
-                    d = U[k,j]
-                    for l = j:nc
-                        U[k,l] -= d*U[i,l]
-                    end
-                end
-            end
-            i += 1
-            j += 1
-        end
-    end
-    U
-end
+rref{T}(A::Matrix{T}) = rref!(copy(A))
+rref{T <: Complex}(A::Matrix{T}) = rrefconv(Complex128, A)
+rref(A::Matrix{Complex128}) = rref!(copy(A))
+rref{T <: Union{Integer, Float16, Float32}}(A::Matrix{T}) = rrefconv(Float64, A)
 
 end # module
