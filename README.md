@@ -1,6 +1,7 @@
 # Reduced Row Echelon form computation
 
-This small package contains the function `rref` that was initially included in Julia but was removed (see [here](https://github.com/JuliaLang/julia/pull/9804)).
+This small package contains the function `rref`.
+The code was initially part of Julia and was developed by Jeff Bezanson (see [here](https://github.com/JuliaLang/julia/pull/9804)).
 
 [![Build Status](https://travis-ci.org/blegat/RowEchelon.jl.svg?branch=master)](https://travis-ci.org/blegat/RowEchelon.jl)
 [![Build status](https://ci.appveyor.com/api/projects/status/h4q97x5fnhx20wnk/branch/master?svg=true)](https://ci.appveyor.com/project/blegat/rowechelon-jl/branch/master)
