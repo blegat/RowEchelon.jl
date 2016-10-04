@@ -60,7 +60,12 @@ facts("Matrix of Complex numbers") do
          3+2im 2-im  2]
     R = [1     0    -2- im;
          0     1     1+4im]
-    C = rref(A)
-    @fact typeof(C) --> Matrix{Complex128}
-    @fact isapprox(C, R) --> true
+    for conv in [false, true]
+        if conv
+            A = Matrix{Complex128}(A)
+        end
+        C = rref(A)
+        @fact typeof(C) --> Matrix{Complex128}
+        @fact isapprox(C, R) --> true
+    end
 end
