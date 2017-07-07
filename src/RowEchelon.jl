@@ -6,7 +6,7 @@ function rref!{T}(A::Matrix{T}, ɛ=T <: Union{Rational,Integer} ? 0 : eps(norm(A
     nr, nc = size(A)
     i = j = 1
     while i <= nr && j <= nc
-        (m, mi) = findmax(abs(A[i:nr,j]))
+        (m, mi) = findmax(abs.(A[i:nr,j]))
         mi = mi+i - 1
         if m <= ɛ
             if ɛ > 0
