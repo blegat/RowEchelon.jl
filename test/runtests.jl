@@ -1,5 +1,5 @@
 using RowEchelon
-using FactCheck
+using Base.Test
 
 As = Vector{Matrix{Int}}()
 Rs = Vector{Matrix{Int}}()
@@ -38,24 +38,24 @@ push!(Rs, [ 1  0  0   1;
             0  0  0   0])
 
 
-facts("Matrices of integers (treated as Float64)") do
+@testset "Matrices of integers (treated as Float64)" begin
     for (A,R) in zip(As,Rs)
         C = rref(A)
-        @fact typeof(C) --> Matrix{Float64}
-        @fact isapprox(C, R) --> true
+        @test C isa Matrix{Float64}
+        @test C ≈ R
     end
 end
 
-facts("Matrices of rationals") do
+@testset "Matrices of rationals" begin
     for (A,R) in zip(As,Rs)
         B = Matrix{Rational{Int}}(A)
         C = rref(B)
-        @fact typeof(C) --> Matrix{Rational{Int}}
-        @fact C --> R
+        @test C isa Matrix{Rational{Int}}
+        @test C == R
     end
 end
 
-facts("Matrix of Complex numbers") do
+@testset "Matrix of Complex numbers" begin
     A = [1+ im 1-im  4;
          3+2im 2-im  2]
     R = [1     0    -2- im;
@@ -65,7 +65,7 @@ facts("Matrix of Complex numbers") do
             A = Matrix{Complex128}(A)
         end
         C = rref(A)
-        @fact typeof(C) --> Matrix{Complex128}
-        @fact isapprox(C, R) --> true
+        @test C isa Matrix{Complex128}
+        @test C ≈ R
     end
 end
