@@ -4,7 +4,7 @@ module RowEchelon
 
 export rref, rref!
 
-function rref!{T}(A::Matrix{T}, ɛ=T <: Union{Rational,Integer} ? 0 : eps(norm(A,Inf)))
+function rref!(A::Matrix{T}, ɛ=T <: Union{Rational,Integer} ? 0 : eps(norm(A,Inf))) where T
     nr, nc = size(A)
     i = j = 1
     while i <= nr && j <= nc
@@ -74,9 +74,9 @@ julia> rref([ 1  2  0   3;
  0.0  0.0  0.0  1.0
 ```
 """
-rref{T}(A::Matrix{T}) = rref!(copy(A))
-rref{T <: Complex}(A::Matrix{T}) = rrefconv(Complex128, A)
+rref(A::Matrix{T}) where {T} = rref!(copy(A))
+rref(A::Matrix{T}) where {T <: Complex} = rrefconv(Complex128, A)
 rref(A::Matrix{Complex128}) = rref!(copy(A))
-rref{T <: Union{Integer, Float16, Float32}}(A::Matrix{T}) = rrefconv(Float64, A)
+rref(A::Matrix{T}) where {T <: Union{Integer, Float16, Float32}} = rrefconv(Float64, A)
 
 end # module
