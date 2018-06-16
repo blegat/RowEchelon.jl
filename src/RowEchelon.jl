@@ -2,6 +2,9 @@ __precompile__()
 
 module RowEchelon
 
+using Compat
+using Compat.LinearAlgebra
+
 export rref, rref!
 
 function rref!(A::Matrix{T}, ɛ=T <: Union{Rational,Integer} ? 0 : eps(norm(A,Inf))) where T
@@ -12,7 +15,7 @@ function rref!(A::Matrix{T}, ɛ=T <: Union{Rational,Integer} ? 0 : eps(norm(A,In
         mi = mi+i - 1
         if m <= ɛ
             if ɛ > 0
-                A[i:nr,j] = 0
+                A[i:nr,j] .= zero(T)
             end
             j += 1
         else
@@ -38,13 +41,13 @@ function rref!(A::Matrix{T}, ɛ=T <: Union{Rational,Integer} ? 0 : eps(norm(A,In
     A
 end
 
-rrefconv{T}(::Type{T}, A::Matrix) = rref!(copy!(similar(A, T), A))
+rrefconv(::Type{T}, A::Matrix) where {T} = rref!(copyto!(similar(A, T), A))
 
 """
     rref(A)
 Compute the reduced row echelon form of the matrix A.
 Since this algorithm is sensitive to numerical imprecision,
-* Complex numbers are converted to Complex128
+* Complex numbers are converted to ComplexF64
 * Integer, Float16 and Float32 numbers are converted to Float64
 * Rational are kept unchanged
 
@@ -75,8 +78,8 @@ julia> rref([ 1  2  0   3;
 ```
 """
 rref(A::Matrix{T}) where {T} = rref!(copy(A))
-rref(A::Matrix{T}) where {T <: Complex} = rrefconv(Complex128, A)
-rref(A::Matrix{Complex128}) = rref!(copy(A))
+rref(A::Matrix{T}) where {T <: Complex} = rrefconv(ComplexF64, A)
+rref(A::Matrix{ComplexF64}) = rref!(copy(A))
 rref(A::Matrix{T}) where {T <: Union{Integer, Float16, Float32}} = rrefconv(Float64, A)
 
 

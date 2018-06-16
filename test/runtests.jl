@@ -1,5 +1,6 @@
 using RowEchelon
-using Base.Test
+using Compat
+using Compat.Test
 
 As = Vector{Matrix{Int}}()
 Rs = Vector{Matrix{Int}}()
@@ -67,10 +68,10 @@ end
          0     1     1+4im]
     for conv in [false, true]
         if conv
-            A = Matrix{Complex128}(A)
+            A = Matrix{ComplexF64}(A)
         end
         C = rref(A)
-        @test C isa Matrix{Complex128}
+        @test C isa Matrix{ComplexF64}
         @test C ≈ R
     end
 end
@@ -105,10 +106,10 @@ end
          0     1     1+4im]
     for conv in [false, true]
         if conv
-            A = Matrix{Complex128}(A)
+            A = Matrix{ComplexF64}(A)
         end
         C = rref_with_pivots(A)
-        @test C[1] isa Matrix{Complex128}
+        @test C[1] isa Matrix{ComplexF64}
         @test C[1] ≈ R
         @test C[2] == [1; 2]
     end
