@@ -12,7 +12,7 @@ function rref_with_pivots!(A::Matrix{T}, ɛ=T <: Union{Rational,Integer} ? 0 : e
         mi = mi+i - 1
         if m <= ɛ
             if ɛ > 0
-                A[i:nr,j] = 0
+                A[i:nr,j] .= zero(T)
             end
             j += 1
         else
@@ -39,14 +39,14 @@ function rref_with_pivots!(A::Matrix{T}, ɛ=T <: Union{Rational,Integer} ? 0 : e
     return A, pivots
 end
 
-rref_with_pivots_conv{T}(::Type{T}, A::Matrix) = rref_with_pivots!(copy!(similar(A, T), A))
+rref_with_pivots_conv(::Type{T}, A::Matrix) where {T} = rref_with_pivots!(copyto!(similar(A, T), A))
 
 """
     rref_with_pivots(A)
 Compute the reduced row echelon form of the matrix A together with the
 position of the pivots.
 Since this algorithm is sensitive to numerical imprecision,
-* Complex numbers are converted to Complex128
+* Complex numbers are converted to ComplexF64
 * Integer, Float16 and Float32 numbers are converted to Float64
 * Rational are kept unchanged
 
@@ -88,6 +88,6 @@ julia> rref_with_pivots([ 1  2  0   3;
 ```
 """
 rref_with_pivots(A::Matrix{T}) where {T} = rref_with_pivots!(copy(A))
-rref_with_pivots(A::Matrix{T}) where {T <: Complex} = rref_with_pivots_conv(Complex128, A)
-rref_with_pivots(A::Matrix{Complex128}) = rref_with_pivots!(copy(A))
+rref_with_pivots(A::Matrix{T}) where {T <: Complex} = rref_with_pivots_conv(ComplexF64, A)
+rref_with_pivots(A::Matrix{ComplexF64}) = rref_with_pivots!(copy(A))
 rref_with_pivots(A::Matrix{T}) where {T <: Union{Integer, Float16, Float32}} = rref_with_pivots_conv(Float64, A)
