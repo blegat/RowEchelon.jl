@@ -8,10 +8,10 @@
 This small package contains the functions `rref` and `rref!`.
 The code was initially part of Julia and was developed by Jeff Bezanson (see [here](https://github.com/JuliaLang/julia/pull/9804)).
 
-[pkg-0.5-img]: http://pkg.julialang.org/badges/RowEchelon_0.5.svg
-[pkg-0.5-url]: http://pkg.julialang.org/?pkg=RowEchelon
 [pkg-0.6-img]: http://pkg.julialang.org/badges/RowEchelon_0.6.svg
 [pkg-0.6-url]: http://pkg.julialang.org/?pkg=RowEchelon
+[pkg-0.7-img]: http://pkg.julialang.org/badges/RowEchelon_0.7.svg
+[pkg-0.7-url]: http://pkg.julialang.org/?pkg=RowEchelon
 
 [build-img]: https://travis-ci.org/blegat/RowEchelon.jl.svg?branch=master
 [build-url]: https://travis-ci.org/blegat/RowEchelon.jl
