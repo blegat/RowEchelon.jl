@@ -2,9 +2,6 @@ __precompile__()
 
 module RowEchelon
 
-using Compat
-using Compat.LinearAlgebra
-
 export rref, rref!
 
 function rref!(A::Matrix{T}, ɛ=T <: Union{Rational,Integer} ? 0 : eps(norm(A,Inf))) where T
