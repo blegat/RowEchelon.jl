@@ -1,6 +1,7 @@
 __precompile__()
 
 module RowEchelon
+using LinearAlgebra
 
 export rref, rref!
 
