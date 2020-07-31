@@ -1,17 +1,12 @@
 # Reduced Row Echelon form computation
 
-| **PackageEvaluator** | **Build Status** |
-|:--------------------:|:----------------:|
-| [![][pkg-0.6-img]][pkg-0.6-url] | [![Build Status][build-img]][build-url] [![Build Status][winbuild-img]][winbuild-url] |
-| [![][pkg-0.7-img]][pkg-0.7-url] | [![Coveralls branch][coveralls-img]][coveralls-url] [![Codecov branch][codecov-img]][codecov-url] |
+| **Build Status** |
+|:----------------:|
+| [![Build Status][build-img]][build-url] [![Build Status][winbuild-img]][winbuild-url] |
+| [![Coveralls branch][coveralls-img]][coveralls-url] [![Codecov branch][codecov-img]][codecov-url] |
 
 This small package contains the functions `rref` and `rref!`.
 The code was initially part of Julia and was developed by Jeff Bezanson (see [here](https://github.com/JuliaLang/julia/pull/9804)).
-
-[pkg-0.6-img]: http://pkg.julialang.org/badges/RowEchelon_0.6.svg
-[pkg-0.6-url]: http://pkg.julialang.org/?pkg=RowEchelon
-[pkg-0.7-img]: http://pkg.julialang.org/badges/RowEchelon_0.7.svg
-[pkg-0.7-url]: http://pkg.julialang.org/?pkg=RowEchelon
 
 [build-img]: https://travis-ci.org/blegat/RowEchelon.jl.svg?branch=master
 [build-url]: https://travis-ci.org/blegat/RowEchelon.jl
