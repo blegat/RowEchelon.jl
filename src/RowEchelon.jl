@@ -1,9 +1,7 @@
 __precompile__()
 
 module RowEchelon
-
-using Compat
-using Compat.LinearAlgebra
+using LinearAlgebra
 
 export rref, rref!
 

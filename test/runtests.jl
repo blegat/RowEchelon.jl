@@ -1,6 +1,5 @@
 using RowEchelon
-using Compat
-using Compat.Test
+using Test
 
 As = Vector{Matrix{Int}}()
 Rs = Vector{Matrix{Int}}()
