@@ -69,14 +69,16 @@ end
         if conv
             A = Matrix{ComplexF64}(A)
         end
-        C = rref(A)
-        @test C isa Matrix{ComplexF64}
-        @test C ≈ R
+        for M in [A, Matrix(A')']
+            C = rref(M)
+            @test C isa Matrix{ComplexF64}
+            @test C ≈ R
+        end
     end
 end
 
 @testset "Matrices of integers (treated as Float64) with Pivots" begin
-    for (A,X) in zip(As, zip(Rs,Ps))
+    for (A, X) in zip(As, zip(Rs,Ps))
         R=X[1]
         P=X[2]
         C = rref_with_pivots(A)
@@ -87,7 +89,7 @@ end
 end
 
 @testset "Matrices of rationals with Pivots" begin
-    for (A,X) in zip(As, zip(Rs,Ps))
+    for (A, X) in zip(As, zip(Rs,Ps))
         R=X[1]
         P=X[2]
         B = Matrix{Rational{Int}}(A)
@@ -107,9 +109,11 @@ end
         if conv
             A = Matrix{ComplexF64}(A)
         end
-        C = rref_with_pivots(A)
-        @test C[1] isa Matrix{ComplexF64}
-        @test C[1] ≈ R
-        @test C[2] == [1; 2]
+        for M in [A, Matrix(A')']
+            C = rref_with_pivots(M)
+            @test C[1] isa Matrix{ComplexF64}
+            @test C[1] ≈ R
+            @test C[2] == [1; 2]
+        end
     end
 end
