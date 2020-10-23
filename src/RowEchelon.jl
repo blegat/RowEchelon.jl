@@ -79,7 +79,7 @@ rref(A::Matrix{T}) where {T} = rref!(copy(A))
 rref(A::Matrix{T}) where {T <: Complex} = rrefconv(ComplexF64, A)
 rref(A::Matrix{ComplexF64}) = rref!(copy(A))
 rref(A::Matrix{T}) where {T <: Union{Integer, Float16, Float32}} = rrefconv(Float64, A)
-
+rref(A::AbstractMatrix) = rref(Matrix(A))
 
 include("RowEchelon_with_pivots.jl")
 
