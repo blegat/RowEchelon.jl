@@ -91,3 +91,5 @@ rref_with_pivots(A::Matrix{T}) where {T} = rref_with_pivots!(copy(A))
 rref_with_pivots(A::Matrix{T}) where {T <: Complex} = rref_with_pivots_conv(ComplexF64, A)
 rref_with_pivots(A::Matrix{ComplexF64}) = rref_with_pivots!(copy(A))
 rref_with_pivots(A::Matrix{T}) where {T <: Union{Integer, Float16, Float32}} = rref_with_pivots_conv(Float64, A)
+
+rref_with_pivots(A::AbstractMatrix) = rref_with_pivots(Matrix(A))
